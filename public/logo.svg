@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 80" width="380" height="80" fill="none">
+  <defs>
+    <linearGradient id="logo-badge-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="45%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="logo-slash-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="text-accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#f43f5e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Brand Emblem (Left) -->
+  <g transform="translate(10, 10)">
+    <rect width="60" height="60" rx="16" fill="url(#logo-badge-grad)"/>
+    <rect x="2.5" y="2.5" width="55" height="55" rx="13.5" fill="#0c0d12" fill-opacity="0.2"/>
+    <path d="M23 19L14 30L23 41" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M33 16L27 44" stroke="url(#logo-slash-grad)" stroke-width="4" stroke-linecap="round"/>
+    <path d="M37 19L46 30L37 41" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Typography (Right) -->
+  <!-- Main Title: My Interview Learning -->
+  <text x="86" y="38" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" fill="#ffffff" letter-spacing="-0.5">
+    My Interview <tspan fill="url(#text-accent)">Learning</tspan>
+  </text>
+  
+  <!-- Subtitle / Tagline -->
+  <text x="87" y="58" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600" fill="#94a3b8" letter-spacing="1.2">
+    ENTERPRISE JAVA &amp; INTERVIEW PREP
+  </text>
+
+  <!-- Pill Badge: MIL -->
+  <g transform="translate(325, 23)">
+    <rect width="42" height="20" rx="6" fill="#f59e0b" fill-opacity="0.15" stroke="#f59e0b" stroke-width="1"/>
+    <text x="21" y="14" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" fill="#f59e0b" text-anchor="middle">MIL</text>
+  </g>
+</svg>

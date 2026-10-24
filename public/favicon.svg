@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+  <defs>
+    <linearGradient id="mil-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="45%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="accent-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded Brand Squircle Badge -->
+  <rect width="64" height="64" rx="16" fill="url(#mil-grad)"/>
+  
+  <!-- Inner Dark Glass Inset for High Contrast on any browser tab -->
+  <rect x="3" y="3" width="58" height="58" rx="13" fill="#0c0d12" fill-opacity="0.25"/>
+  
+  <!-- Left Bracket < -->
+  <path d="M25 21L15 32L25 43" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Slash / with Gold/Amber Accent -->
+  <path d="M35 18L29 46" stroke="url(#accent-grad)" stroke-width="4.5" stroke-linecap="round"/>
+  
+  <!-- Right Bracket > -->
+  <path d="M39 21L49 32L39 43" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
