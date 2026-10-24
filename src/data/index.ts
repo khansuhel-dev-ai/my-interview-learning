@@ -1,4 +1,5 @@
 import { LanguageId, Topic, TopicGroup, SearchResultItem } from '../types';
+import { LANGUAGES } from './languages';
 import { JAVA_TOPICS } from './javaTopics';
 import { EXERCISES } from './exercises';
 import { INTERVIEW_QUESTIONS } from './interviewQuestions';
@@ -66,8 +67,8 @@ export function getAdjacentTopics(currentTopicId: string): { prev?: Topic; next?
 
 export function getPlatformStats() {
   return {
-    languagesCount: 1,
-    activeLanguagesCount: 1,
+    languagesCount: LANGUAGES.length,
+    activeLanguagesCount: LANGUAGES.filter((l) => l.status === 'active').length,
     javaTopicsCount: JAVA_TOPICS.length,
     phpTopicsCount: 0,
     totalTopicsCount: JAVA_TOPICS.length,

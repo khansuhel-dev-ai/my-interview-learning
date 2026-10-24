@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   FileCode2,
@@ -6,14 +6,16 @@ import {
   RotateCcw,
   Layers,
 } from 'lucide-react';
-import { EXERCISES } from '../data';
+import { EXERCISES, LANGUAGES } from '../data';
 import { ExerciseCard } from '../components/exercises/ExerciseCard';
 import { useProgress } from '../hooks/useProgress';
 import { LanguageComingSoon } from '../components/common/LanguageComingSoon';
+import { Pagination } from '../components/common/Pagination';
 
 export const ExercisesPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { progress } = useProgress();
+  const listTopRef = useRef<HTMLDivElement>(null);
 
   const langParam = searchParams.get('lang') || 'all';
   const idParam = searchParams.get('id');
@@ -23,9 +25,18 @@ export const ExercisesPage: React.FC = () => {
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
+  // Pagination state
+  const [pageSize, setPageSize] = useState<number>(10);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
   useEffect(() => {
     if (langParam) setSelectedLanguage(langParam);
   }, [langParam]);
+
+  // Reset to first page when any filter or page size changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedLanguage, selectedDifficulty, selectedStatus, searchQuery, pageSize]);
 
   const filteredExercises = useMemo(() => {
     return EXERCISES.filter((ex) => {
@@ -62,6 +73,25 @@ export const ExercisesPage: React.FC = () => {
   const totalExercises = EXERCISES.length;
   const completedCount = progress.completedExercises.length;
   const percentage = Math.round((completedCount / totalExercises) * 100);
+  const totalPages = Math.max(1, Math.ceil(filteredExercises.length / pageSize));
+
+  // Paginated slice
+  const paginatedExercises = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize;
+    return filteredExercises.slice(startIndex, startIndex + pageSize);
+  }, [filteredExercises, currentPage, pageSize]);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    if (listTopRef.current) {
+      listTopRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handlePageSizeChange = (newSize: number) => {
+    setPageSize(newSize);
+    setCurrentPage(1);
+  };
 
   const resetFilters = () => {
     setSelectedLanguage('all');
@@ -69,6 +99,7 @@ export const ExercisesPage: React.FC = () => {
     setSelectedStatus('all');
     setSearchQuery('');
     setSearchParams({});
+    setCurrentPage(1);
   };
 
   return (
@@ -110,6 +141,25 @@ export const ExercisesPage: React.FC = () => {
       {/* Filter Controls Bar */}
       <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-[#0f1017] border border-zinc-200 dark:border-zinc-800 flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-3">
+          {/* Language Filter */}
+          <div className="flex items-center gap-1.5 text-xs">
+            <span className="text-zinc-500 dark:text-zinc-400 font-medium">Track:</span>
+            <select
+              value={selectedLanguage}
+              onChange={(e) => {
+                setSelectedLanguage(e.target.value);
+                setSearchParams(e.target.value === 'all' ? {} : { lang: e.target.value });
+              }}
+              className="px-2.5 py-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-medium focus:outline-none cursor-pointer"
+            >
+              <option value="all">All Tracks</option>
+              {LANGUAGES.map((l) => (
+                <option key={l.id} value={l.id}>
+                  {l.name} {l.status === 'coming-soon' ? '(Coming Soon)' : `(${l.totalExercises})`}
+                </option>
+              ))}
+            </select>
+          </div>
 
           {/* Difficulty Filter */}
           <div className="flex items-center gap-1.5 text-xs">
@@ -117,7 +167,7 @@ export const ExercisesPage: React.FC = () => {
             <select
               value={selectedDifficulty}
               onChange={(e) => setSelectedDifficulty(e.target.value)}
-              className="px-2.5 py-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-medium focus:outline-none"
+              className="px-2.5 py-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-medium focus:outline-none cursor-pointer"
             >
               <option value="all">All Difficulties</option>
               <option value="Beginner">Beginner</option>
@@ -132,7 +182,7 @@ export const ExercisesPage: React.FC = () => {
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="px-2.5 py-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-medium focus:outline-none"
+              className="px-2.5 py-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-medium focus:outline-none cursor-pointer"
             >
               <option value="all">All Status</option>
               <option value="completed">Solved Only</option>
@@ -170,6 +220,9 @@ export const ExercisesPage: React.FC = () => {
         </div>
       </div>
 
+      {/* Scroll anchor */}
+      <div ref={listTopRef} />
+
       {/* Exercises List */}
       {selectedLanguage === 'php' ? (
         <LanguageComingSoon languageName="PHP" context="exercises" />
@@ -191,9 +244,23 @@ export const ExercisesPage: React.FC = () => {
         </div>
       ) : (
         <div className="space-y-6">
-          {filteredExercises.map((exercise) => (
-            <ExerciseCard key={exercise.id} exercise={exercise} />
-          ))}
+          <div className="space-y-6">
+            {paginatedExercises.map((exercise) => (
+              <ExerciseCard key={exercise.id} exercise={exercise} />
+            ))}
+          </div>
+
+          {/* Pagination Controls (10-20 per page) */}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={filteredExercises.length}
+            pageSize={pageSize}
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
+            pageSizeOptions={[10, 15, 20]}
+            itemLabel="exercises"
+          />
         </div>
       )}
     </div>

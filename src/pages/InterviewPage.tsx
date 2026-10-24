@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   HelpCircle,
@@ -6,14 +6,16 @@ import {
   RotateCcw,
   ChevronsUpDown,
 } from 'lucide-react';
-import { INTERVIEW_QUESTIONS } from '../data';
+import { INTERVIEW_QUESTIONS, LANGUAGES } from '../data';
 import { QuestionCard } from '../components/interview/QuestionCard';
 import { useProgress } from '../hooks/useProgress';
 import { LanguageComingSoon } from '../components/common/LanguageComingSoon';
+import { Pagination } from '../components/common/Pagination';
 
 export const InterviewPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { progress } = useProgress();
+  const listTopRef = useRef<HTMLDivElement>(null);
 
   const langParam = searchParams.get('lang') || 'all';
   const idParam = searchParams.get('id');
@@ -24,9 +26,18 @@ export const InterviewPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [expandAll, setExpandAll] = useState(false);
 
+  // Pagination state
+  const [pageSize, setPageSize] = useState<number>(10);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
   useEffect(() => {
     if (langParam) setSelectedLanguage(langParam);
   }, [langParam]);
+
+  // Reset page when filters or page size change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedLanguage, selectedDifficulty, selectedType, searchQuery, pageSize]);
 
   const filteredQuestions = useMemo(() => {
     return INTERVIEW_QUESTIONS.filter((q) => {
@@ -66,6 +77,25 @@ export const InterviewPage: React.FC = () => {
 
   const totalQuestions = INTERVIEW_QUESTIONS.length;
   const reviewedCount = progress.reviewedQuestions.length;
+  const totalPages = Math.max(1, Math.ceil(filteredQuestions.length / pageSize));
+
+  // Paginated slice
+  const paginatedQuestions = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize;
+    return filteredQuestions.slice(startIndex, startIndex + pageSize);
+  }, [filteredQuestions, currentPage, pageSize]);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    if (listTopRef.current) {
+      listTopRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handlePageSizeChange = (newSize: number) => {
+    setPageSize(newSize);
+    setCurrentPage(1);
+  };
 
   const resetFilters = () => {
     setSelectedLanguage('all');
@@ -73,28 +103,29 @@ export const InterviewPage: React.FC = () => {
     setSelectedType('all');
     setSearchQuery('');
     setSearchParams({});
+    setCurrentPage(1);
   };
 
   return (
     <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8 space-y-8">
-      {/* Header with Stats */}
+      {/* Header Bar with Reviewed Count */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-zinc-200 dark:border-zinc-800">
         <div className="space-y-2 max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800/60 text-amber-600 dark:text-amber-400 text-xs font-semibold">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800/60 text-amber-700 dark:text-amber-300 text-xs font-semibold">
             <HelpCircle className="w-3.5 h-3.5" />
-            <span>82+ Real-World Java Interview Questions</span>
+            <span>Technical Interview Question Bank</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
-            Interview Question Bank
+            Interview Preparation Bank
           </h1>
 
           <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-            Concise, interview-tested answers designed for technical rounds. Each question includes high-impact 30-second bullet summaries, deep-dive architecture notes, and follow-up interviewer questions.
+            Curated, high-frequency interview questions for senior Java and software engineering roles. Each question provides a 30-second elevator answer, deep-dive JVM mechanics, and follow-up interviewer scenarios.
           </p>
         </div>
 
-        {/* Progress Tracker Card */}
+        {/* Reviewed Progress Card */}
         <div className="p-4 rounded-2xl bg-white dark:bg-[#12131d] border border-zinc-200 dark:border-zinc-800 shrink-0 w-full md:w-64 space-y-2 shadow-xs">
           <div className="flex items-center justify-between text-xs font-semibold">
             <span className="text-zinc-600 dark:text-zinc-300">Questions Reviewed</span>
@@ -116,6 +147,25 @@ export const InterviewPage: React.FC = () => {
       {/* Filter Controls Bar */}
       <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-[#0f1017] border border-zinc-200 dark:border-zinc-800 flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-3">
+          {/* Language / Track Filter */}
+          <div className="flex items-center gap-1.5 text-xs">
+            <span className="text-zinc-500 dark:text-zinc-400 font-medium">Track:</span>
+            <select
+              value={selectedLanguage}
+              onChange={(e) => {
+                setSelectedLanguage(e.target.value);
+                setSearchParams(e.target.value === 'all' ? {} : { lang: e.target.value });
+              }}
+              className="px-2.5 py-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-medium focus:outline-none cursor-pointer"
+            >
+              <option value="all">All Tracks</option>
+              {LANGUAGES.map((l) => (
+                <option key={l.id} value={l.id}>
+                  {l.name} {l.status === 'coming-soon' ? '(Coming Soon)' : `(${l.totalQuestions})`}
+                </option>
+              ))}
+            </select>
+          </div>
 
           {/* Difficulty Filter */}
           <div className="flex items-center gap-1.5 text-xs">
@@ -123,7 +173,7 @@ export const InterviewPage: React.FC = () => {
             <select
               value={selectedDifficulty}
               onChange={(e) => setSelectedDifficulty(e.target.value)}
-              className="px-2.5 py-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-medium focus:outline-none"
+              className="px-2.5 py-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-medium focus:outline-none cursor-pointer"
             >
               <option value="all">All Levels</option>
               <option value="Beginner">Beginner</option>
@@ -138,7 +188,7 @@ export const InterviewPage: React.FC = () => {
             <select
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value)}
-              className="px-2.5 py-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-medium focus:outline-none"
+              className="px-2.5 py-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-medium focus:outline-none cursor-pointer"
             >
               <option value="all">All Types</option>
               <option value="Conceptual">Conceptual</option>
@@ -185,36 +235,53 @@ export const InterviewPage: React.FC = () => {
         </div>
       </div>
 
+      {/* Scroll anchor */}
+      <div ref={listTopRef} />
+
       {/* Question Cards List */}
-      <div className="space-y-4">
-        {selectedLanguage === 'php' ? (
-          <LanguageComingSoon languageName="PHP" context="interview" />
-        ) : filteredQuestions.length === 0 ? (
-          <div className="p-12 text-center rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#12131d] space-y-3">
-            <HelpCircle className="w-8 h-8 text-zinc-400 mx-auto" />
-            <h3 className="font-bold text-base text-zinc-900 dark:text-white">
-              No questions found
-            </h3>
-            <p className="text-xs text-zinc-500 max-w-sm mx-auto">
-              No interview questions match your current filters or search query.
-            </p>
-            <button
-              onClick={resetFilters}
-              className="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold cursor-pointer"
-            >
-              Reset Filters
-            </button>
+      {selectedLanguage === 'php' ? (
+        <LanguageComingSoon languageName="PHP" context="interview" />
+      ) : filteredQuestions.length === 0 ? (
+        <div className="p-12 text-center rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#12131d] space-y-3">
+          <HelpCircle className="w-8 h-8 text-zinc-400 mx-auto" />
+          <h3 className="font-bold text-base text-zinc-900 dark:text-white">
+            No questions found
+          </h3>
+          <p className="text-xs text-zinc-500 max-w-sm mx-auto">
+            No interview questions match your current filters or search query.
+          </p>
+          <button
+            onClick={resetFilters}
+            className="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold cursor-pointer"
+          >
+            Reset Filters
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-6">
+          <div className="space-y-4">
+            {paginatedQuestions.map((question) => (
+              <QuestionCard
+                key={question.id}
+                question={question}
+                defaultExpanded={expandAll || question.id === idParam}
+              />
+            ))}
           </div>
-        ) : (
-          filteredQuestions.map((question) => (
-            <QuestionCard
-              key={question.id}
-              question={question}
-              defaultExpanded={expandAll || question.id === idParam}
-            />
-          ))
-        )}
-      </div>
+
+          {/* Pagination Controls (10-20 per page) */}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={filteredQuestions.length}
+            pageSize={pageSize}
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
+            pageSizeOptions={[10, 15, 20]}
+            itemLabel="questions"
+          />
+        </div>
+      )}
     </div>
   );
 };
