@@ -2109,7 +2109,451 @@ public class Main {
       },
     ],
   },
+
+  {
+    id: 'ex-047-gradle-bootrun-command',
+    number: 47,
+    languageId: 'java',
+    topicId: 'java-gradle-build-tool',
+    topicTitle: 'Gradle — Modern Build Tool & Groovy DSL',
+    title: 'Execute Gradle BootRun & Inspect State',
+    difficulty: 'Beginner',
+    task: 'Write a class GradleBootRunSim that simulates executing a Spring Boot application using the Gradle wrapper. In main(), print the exact CLI command on Linux/macOS to start the development server using Gradle wrapper (./gradlew bootRun), followed by the Gradle task state when execution succeeds without re-compilation (:bootRun UP-TO-DATE).',
+    starterCode: `public class GradleBootRunSim {
+    public static void main(String[] args) {
+        // TODO: Print the wrapper command to run a Spring Boot app (./gradlew bootRun)
+        // TODO: Print the UP-TO-DATE task output state (:bootRun UP-TO-DATE)
+    }
+}`,
+    solutionCode: `public class GradleBootRunSim {
+    public static void main(String[] args) {
+        System.out.println("./gradlew bootRun");
+        System.out.println(":bootRun UP-TO-DATE");
+    }
+}`,
+    expectedOutput: `./gradlew bootRun\n:bootRun UP-TO-DATE`,
+    explanation: 'The Gradle wrapper ensures consistent builds across environments. When task inputs and outputs have not changed, Gradle marks the task as UP-TO-DATE and avoids redundant work.',
+    hints: [
+      'Line 1: ./gradlew bootRun',
+      'Line 2: :bootRun UP-TO-DATE',
+    ],
+    testCases: [
+      {
+        description: 'Verifies Gradle wrapper bootRun command and task status',
+        expectedOutput: "./gradlew bootRun\n:bootRun UP-TO-DATE",
+      },
+    ],
+  },
+
+  {
+    id: 'ex-048-spring-boot-rest-controller',
+    number: 48,
+    languageId: 'java',
+    topicId: 'java-spring-boot-overview',
+    topicTitle: 'Spring Boot Overview & Initializr Setup',
+    title: 'Spring Boot REST Controller Simulation',
+    difficulty: 'Beginner',
+    task: 'Create a class HelloControllerSim that simulates a Spring Boot REST endpoint. Implement a public String hello() method that returns "Hello, Spring Boot World!". In main(), instantiate HelloControllerSim, call hello(), and print the response.',
+    starterCode: `public class HelloControllerSim {
+    public String hello() {
+        // TODO: Return "Hello, Spring Boot World!"
+        return "";
+    }
+
+    public static void main(String[] args) {
+        // TODO: Instantiate and print result of hello()
+    }
+}`,
+    solutionCode: `public class HelloControllerSim {
+    public String hello() {
+        return "Hello, Spring Boot World!";
+    }
+
+    public static void main(String[] args) {
+        HelloControllerSim controller = new HelloControllerSim();
+        System.out.println(controller.hello());
+    }
+}`,
+    expectedOutput: `Hello, Spring Boot World!`,
+    explanation: 'In Spring Boot, methods annotated with @GetMapping inside a @RestController return response bodies directly serialized to the HTTP client (defaulting to Jackson JSON or plain text).',
+    hints: [
+      'Return "Hello, Spring Boot World!" from hello()',
+      'In main, create new HelloControllerSim() and print controller.hello()',
+    ],
+    testCases: [
+      {
+        description: 'Simulates invoking a Spring Boot REST controller endpoint',
+        expectedOutput: "Hello, Spring Boot World!",
+      },
+    ],
+  },
+
+  {
+    id: 'ex-049-junit5-assertions',
+    number: 49,
+    languageId: 'java',
+    topicId: 'java-junit5-testing',
+    topicTitle: 'Unit Testing with JUnit 5 (Jupiter)',
+    title: 'JUnit 5 Assertion Pattern Simulator',
+    difficulty: 'Beginner',
+    task: 'Write a class CalculatorTestSim that simulates JUnit 5\'s Assertions.assertEquals(expected, actual). Implement a static int add(int a, int b) method. In main(), compute int actual = add(15, 25), and int expected = 40. If expected equals actual, print "ASSERTION PASSED: 40 == 40", otherwise print "ASSERTION FAILED".',
+    starterCode: `public class CalculatorTestSim {
+    static int add(int a, int b) {
+        // TODO: Return sum of a and b
+        return 0;
+    }
+
+    public static void main(String[] args) {
+        // TODO: Verify add(15, 25) == 40 and print "ASSERTION PASSED: 40 == 40"
+    }
+}`,
+    solutionCode: `public class CalculatorTestSim {
+    static int add(int a, int b) {
+        return a + b;
+    }
+
+    public static void main(String[] args) {
+        int expected = 40;
+        int actual = add(15, 25);
+        if (expected == actual) {
+            System.out.println("ASSERTION PASSED: " + expected + " == " + actual);
+        } else {
+            System.out.println("ASSERTION FAILED");
+        }
+    }
+}`,
+    expectedOutput: `ASSERTION PASSED: 40 == 40`,
+    explanation: 'JUnit 5 Assertions.assertEquals(expected, actual) compares the expected test specification with the actual execution result, throwing AssertionFailedError on divergence.',
+    hints: [
+      'Implement add to return a + b;',
+      'Check if expected == actual and print "ASSERTION PASSED: 40 == 40"',
+    ],
+    testCases: [
+      {
+        description: 'Simulates standard AAA assertion behavior with expected vs actual',
+        expectedOutput: "ASSERTION PASSED: 40 == 40",
+      },
+    ],
+  },
+
+  {
+    id: 'ex-050-dsa-binary-search',
+    number: 50,
+    languageId: 'java',
+    topicId: 'java-dsa-searching-algorithms',
+    topicTitle: 'Searching Algorithms: Linear vs Binary Search',
+    title: 'Binary Search with Overflow-Safe Midpoint',
+    difficulty: 'Intermediate',
+    task: 'Implement binary search to find target 42 in sorted array {5, 12, 19, 27, 42, 68, 91}. Use the overflow-safe midpoint calculation int mid = low + (high - low) / 2. Print "Found target 42 at index: " + index.',
+    starterCode: `public class BinarySearchSim {
+    static int binarySearch(int[] arr, int target) {
+        // TODO: Implement binary search with low + (high - low) / 2
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        int[] sorted = {5, 12, 19, 27, 42, 68, 91};
+        int index = binarySearch(sorted, 42);
+        System.out.println("Found target 42 at index: " + index);
+    }
+}`,
+    solutionCode: `public class BinarySearchSim {
+    static int binarySearch(int[] arr, int target) {
+        int low = 0;
+        int high = arr.length - 1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] == target) {
+                return mid;
+            } else if (arr[mid] < target) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        int[] sorted = {5, 12, 19, 27, 42, 68, 91};
+        int index = binarySearch(sorted, 42);
+        System.out.println("Found target 42 at index: " + index);
+    }
+}`,
+    expectedOutput: `Found target 42 at index: 4`,
+    explanation: 'Binary search halves the search space each iteration, running in O(log n) time. Using low + (high - low) / 2 prevents 32-bit signed integer overflow when low + high exceeds Integer.MAX_VALUE.',
+    hints: [
+      'Initialize low = 0, high = arr.length - 1',
+      'Loop while low <= high',
+      'Compute mid = low + (high - low) / 2',
+      'Adjust low or high accordingly',
+    ],
+    testCases: [
+      {
+        description: 'Locates element in sorted array using binary search',
+        expectedOutput: "Found target 42 at index: 4",
+      },
+    ],
+  },
+
+  {
+    id: 'ex-051-dsa-array-traversal',
+    number: 51,
+    languageId: 'java',
+    topicId: 'java-dsa-arrays',
+    topicTitle: 'Arrays: Memory Model & Operations',
+    title: 'Array Linear Traversal & Maximum Element',
+    difficulty: 'Beginner',
+    task: 'Write a class ArrayMaxFinder. Given the array {15, 82, 34, 99, 47, 61}, iterate through the elements to find the maximum integer. Print "Maximum element: " + max.',
+    starterCode: `public class ArrayMaxFinder {
+    public static void main(String[] args) {
+        int[] numbers = {15, 82, 34, 99, 47, 61};
+        // TODO: Find maximum element and print "Maximum element: 99"
+    }
+}`,
+    solutionCode: `public class ArrayMaxFinder {
+    public static void main(String[] args) {
+        int[] numbers = {15, 82, 34, 99, 47, 61};
+        int max = numbers[0];
+        for (int i = 1; i < numbers.length; i++) {
+            if (numbers[i] > max) {
+                max = numbers[i];
+            }
+        }
+        System.out.println("Maximum element: " + max);
+    }
+}`,
+    expectedOutput: `Maximum element: 99`,
+    explanation: 'A linear scan touches every element exactly once in O(n) time and O(1) auxiliary space, comparing against the running maximum.',
+    hints: [
+      'Initialize max = numbers[0]',
+      'Iterate through the array and update max if numbers[i] > max',
+      'Print "Maximum element: " + max',
+    ],
+    testCases: [
+      {
+        description: 'Finds maximum integer in an array',
+        expectedOutput: "Maximum element: 99",
+      },
+    ],
+  },
+
+  {
+    id: 'ex-052-dsa-linked-list-insert',
+    number: 52,
+    languageId: 'java',
+    topicId: 'java-dsa-linked-lists',
+    topicTitle: 'Linked Lists: Singly, Doubly, and Circular',
+    title: 'Singly Linked List Prepend Operation',
+    difficulty: 'Intermediate',
+    task: 'Implement a singly linked list with Node(int val, Node next). Write an insertAtHead(int val) method. Insert 30, then 20, then 10 at the head. Traverse and print all elements joined by " -> " ending with "null" (10 -> 20 -> 30 -> null).',
+    starterCode: `public class SinglyLinkedListSim {
+    static class Node {
+        int val;
+        Node next;
+        Node(int val) { this.val = val; }
+    }
+
+    static Node head = null;
+
+    static void insertAtHead(int val) {
+        // TODO: Insert node with val at the head of the list
+    }
+
+    public static void main(String[] args) {
+        insertAtHead(30);
+        insertAtHead(20);
+        insertAtHead(10);
+
+        // TODO: Traverse and print: "10 -> 20 -> 30 -> null"
+    }
+}`,
+    solutionCode: `public class SinglyLinkedListSim {
+    static class Node {
+        int val;
+        Node next;
+        Node(int val) { this.val = val; }
+    }
+
+    static Node head = null;
+
+    static void insertAtHead(int val) {
+        Node newNode = new Node(val);
+        newNode.next = head;
+        head = newNode;
+    }
+
+    public static void main(String[] args) {
+        insertAtHead(30);
+        insertAtHead(20);
+        insertAtHead(10);
+
+        Node curr = head;
+        StringBuilder sb = new StringBuilder();
+        while (curr != null) {
+            sb.append(curr.val).append(" -> ");
+            curr = curr.next;
+        }
+        sb.append("null");
+        System.out.println(sb.toString());
+    }
+}`,
+    expectedOutput: `10 -> 20 -> 30 -> null`,
+    explanation: 'Prepending a node to the head of a linked list takes O(1) constant time, requiring only pointing the new node\'s next pointer to the current head and updating the head reference.',
+    hints: [
+      'In insertAtHead: Node newNode = new Node(val); newNode.next = head; head = newNode;',
+      'Traverse using a while loop: curr != null',
+      'Append " -> " after each element and terminate with "null"',
+    ],
+    testCases: [
+      {
+        description: 'Prepends elements to linked list head and prints traversal',
+        expectedOutput: "10 -> 20 -> 30 -> null",
+      },
+    ],
+  },
+
+  {
+    id: 'ex-053-dsa-stack-parentheses',
+    number: 53,
+    languageId: 'java',
+    topicId: 'java-dsa-stacks',
+    topicTitle: 'Stacks: LIFO Principle & Applications',
+    title: 'Balanced Parentheses with ArrayDeque',
+    difficulty: 'Intermediate',
+    task: 'Use java.util.ArrayDeque as a LIFO stack to determine if bracket strings are balanced. In main(), check "({[]})" and "([)]". Print true for the first and false for the second on separate lines.',
+    starterCode: `import java.util.ArrayDeque;
+import java.util.Deque;
+
+public class BalancedParenthesesSim {
+    static boolean isBalanced(String s) {
+        // TODO: Implement balanced parentheses validation using Deque
+        return false;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isBalanced("({[]})"));
+        System.out.println(isBalanced("([)]"));
+    }
+}`,
+    solutionCode: `import java.util.ArrayDeque;
+import java.util.Deque;
+
+public class BalancedParenthesesSim {
+    static boolean isBalanced(String s) {
+        Deque<Character> stack = new ArrayDeque<>();
+        for (char ch : s.toCharArray()) {
+            if (ch == '(' || ch == '{' || ch == '[') {
+                stack.push(ch);
+            } else {
+                if (stack.isEmpty()) return false;
+                char top = stack.pop();
+                if ((ch == ')' && top != '(') ||
+                    (ch == '}' && top != '{') ||
+                    (ch == ']' && top != '[')) {
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isBalanced("({[]})"));
+        System.out.println(isBalanced("([)]"));
+    }
+}`,
+    expectedOutput: `true\nfalse`,
+    explanation: 'A stack validates nested bracket structures in O(n) time and O(n) space. Java\'s ArrayDeque is non-synchronized and faster than legacy Stack.',
+    hints: [
+      'Push opening brackets onto stack',
+      'When seeing a closing bracket, check if stack is empty or top does not match',
+      'Return stack.isEmpty() at the end',
+    ],
+    testCases: [
+      {
+        description: 'Tests balanced vs unbalanced bracket sequences with ArrayDeque',
+        expectedOutput: "true\nfalse",
+      },
+    ],
+  },
+
+  {
+    id: 'ex-054-dsa-bst-inorder-traversal',
+    number: 54,
+    languageId: 'java',
+    topicId: 'java-dsa-trees-and-bst',
+    topicTitle: 'Trees & Binary Search Trees (BST)',
+    title: 'BST In-Order Traversal (Sorted Sequence)',
+    difficulty: 'Intermediate',
+    task: 'Construct a Binary Search Tree with root 50, left child 30 (with children 20 and 40), and right child 70 (with children 60 and 80). Implement an in-order traversal (Left, Root, Right) and print the numbers separated by spaces on a single line.',
+    starterCode: `public class BstInOrderSim {
+    static class TreeNode {
+        int val;
+        TreeNode left, right;
+        TreeNode(int val) { this.val = val; }
+    }
+
+    static void inOrder(TreeNode root) {
+        // TODO: In-order traversal (Left, Root, Right) printing val + " "
+    }
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(50);
+        root.left = new TreeNode(30);
+        root.right = new TreeNode(70);
+        root.left.left = new TreeNode(20);
+        root.left.right = new TreeNode(40);
+        root.right.left = new TreeNode(60);
+        root.right.right = new TreeNode(80);
+
+        inOrder(root);
+        System.out.println();
+    }
+}`,
+    solutionCode: `public class BstInOrderSim {
+    static class TreeNode {
+        int val;
+        TreeNode left, right;
+        TreeNode(int val) { this.val = val; }
+    }
+
+    static void inOrder(TreeNode root) {
+        if (root == null) return;
+        inOrder(root.left);
+        System.out.print(root.val + " ");
+        inOrder(root.right);
+    }
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(50);
+        root.left = new TreeNode(30);
+        root.right = new TreeNode(70);
+        root.left.left = new TreeNode(20);
+        root.left.right = new TreeNode(40);
+        root.right.left = new TreeNode(60);
+        root.right.right = new TreeNode(80);
+
+        inOrder(root);
+        System.out.println();
+    }
+}`,
+    expectedOutput: `20 30 40 50 60 70 80 `,
+    explanation: 'An in-order traversal on a Binary Search Tree always visits elements in ascending sorted order: Left Subtree (< root), Root, Right Subtree (> root).',
+    hints: [
+      'Base condition: if (root == null) return;',
+      'Recurse on root.left, print root.val + " ", recurse on root.right',
+    ],
+    testCases: [
+      {
+        description: 'Visits BST nodes in ascending sorted order via in-order traversal',
+        expectedOutput: "20 30 40 50 60 70 80 \n",
+      },
+    ],
+  },
 ];
+
 
 
 

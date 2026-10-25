@@ -9,9 +9,9 @@
 </p>
 
 <p align="center">
-  <a href="#-curriculum-overview"><img src="https://img.shields.io/badge/Lessons-48%20Comprehensive%20Topics-blue?style=for-the-badge&logo=java" alt="48 Lessons" /></a>
-  <a href="#-hands-on-exercises"><img src="https://img.shields.io/badge/Exercises-46%20Interactive%20Labs-emerald?style=for-the-badge&logo=codewars" alt="46 Exercises" /></a>
-  <a href="#-technical-interview-question-bank"><img src="https://img.shields.io/badge/Interview%20Bank-117%20Real--World%20Q%26As-amber?style=for-the-badge&logo=interview-cake" alt="117 Questions" /></a>
+  <a href="#-curriculum-overview"><img src="https://img.shields.io/badge/Lessons-61%20Comprehensive%20Topics-blue?style=for-the-badge&logo=java" alt="61 Lessons" /></a>
+  <a href="#-hands-on-exercises"><img src="https://img.shields.io/badge/Exercises-54%20Interactive%20Labs-emerald?style=for-the-badge&logo=codewars" alt="54 Exercises" /></a>
+  <a href="#-technical-interview-question-bank"><img src="https://img.shields.io/badge/Interview%20Bank-127%20Real--World%20Q%26As-amber?style=for-the-badge&logo=interview-cake" alt="127 Questions" /></a>
   <a href="#-data-immutability--security-guarantee"><img src="https://img.shields.io/badge/Architecture-100%25%20Static%20%7C%20Immutable-purple?style=for-the-badge&logo=shield" alt="Static Immutable" /></a>
   <a href="#-deploying-to-vercel"><img src="https://img.shields.io/badge/Deploy-Vercel%20Ready-black?style=for-the-badge&logo=vercel" alt="Vercel Ready" /></a>
 </p>
@@ -25,7 +25,10 @@
 Unlike generic tutorials that teach only basic syntax, MIL dives straight into:
 - **JVM Runtime Mechanics**: Bytecode execution, Stack vs Heap memory allocation, Garbage Collection phases, and String Constant Pool intern tables.
 - **Deep Concurrency**: The 6 official `Thread.State` enum states, nondeterministic interleaving, race conditions, CPU cache coherence, `synchronized` monitor locks, and `volatile` memory visibility.
-- **Enterprise Build Systems**: Complete Apache Maven architectural model, POM inheritance, dependency mediation (`nearest-definition`), multi-module reactor builds, and build lifecycle phase-to-goal bindings.
+- **Enterprise Build Systems**: Complete Apache Maven and Gradle Groovy DSL architectural models, Directed Acyclic Graph (DAG) task execution, wrapper workflows, dependency mediation, and multi-project reactor builds.
+- **Spring Boot 3 & Microservices**: Starters, Auto-Configuration (`@ConditionalOnMissingBean`), embedded Tomcat, and the complete 13-step HTTP request-to-response lifecycle.
+- **Automated Testing with JUnit 5**: Three-tier architecture (Platform, Jupiter, Vintage), AAA pattern, `@TestInstance` lifecycles, and distinguishing core JUnit from Spring test slices (`@SpringBootTest`, `@WebMvcTest`).
+- **Data Structures & Algorithms**: Big-O notation, Arrays, Linear & Binary Search, Sorting algorithms (Bubble, Selection, Insertion, QuickSort), Linked Lists, Stacks, Queues, Trees/BSTs, Graphs (BFS/DFS), and algorithmic complexity reference matrices.
 - **Modern Java Evolutions**: Deep coverage of Java 8 through Java 21, including Streams, Lambdas, Records, Sealed Classes, Pattern Matching, and Virtual Threads (Project Loom).
 
 ---
@@ -84,7 +87,7 @@ This repository is pre-configured for seamless 1-click deployment on **Vercel**.
 
 ### Automatic SPA Routing (`vercel.json`)
 The included `vercel.json` provides:
-- **Single Page Application (SPA) Rewrites**: Deep routes like `/learn/java/java-maven-build-management`, `/exercises`, `/interview`, and `/about` are routed to `index.html` to eliminate 404s on browser refresh.
+- **Single Page Application (SPA) Rewrites**: Deep routes like `/learn/java/java-spring-boot-overview-lifecycle`, `/exercises`, `/interview`, and `/about` are routed to `index.html` to eliminate 404s on browser refresh.
 - **Aggressive CDN Caching**: Immutable static assets (`/assets/*`) are cached for 1 year (`max-age=31536000, immutable`).
 - **Security Headers**: Includes `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, and `X-XSS-Protection: 1; mode=block`.
 
@@ -100,9 +103,9 @@ The included `vercel.json` provides:
 
 ---
 
-## 📚 Curriculum Overview (48 Lessons)
+## 📚 Curriculum Overview (61 Lessons)
 
-The curriculum is structured into 9 progressive learning modules:
+The curriculum is structured into 12 progressive learning modules:
 
 ```text
 Module 1: Setup and First Program (2 Lessons)
@@ -168,8 +171,28 @@ Module 8: Modern Java (Java 8 to 21) (10 Lessons)
 ├── JAVA-055: Java 17 Sealed Classes (sealed, permits, non-sealed, final domain modeling)
 └── JAVA-056: Java 21 Virtual Threads & Loom (Carrier threads, continuations, million-thread scale)
 
-Module 9: Build Tools & DevOps (1 In-Depth Lesson)
-└── JAVA-057: Apache Maven & Build Management (10 comprehensive sections + interactive diagrams)
+Module 9: Build Tools & DevOps (2 Lessons)
+├── JAVA-057: Apache Maven & Build Management (10 comprehensive sections + interactive diagrams)
+└── JAVA-058: Gradle Build Automation & Groovy DSL (8 sections, DAG tasks, wrapper, workflow diagram)
+
+Module 10: Spring Framework & Microservices (1 Lesson)
+└── JAVA-059: Spring Boot Overview & 13-Step Request Lifecycle (Initializr, starters, interactive lifecycle)
+
+Module 11: Unit Testing & Quality Engineering (1 Lesson)
+└── JAVA-060: Unit Testing with JUnit 5 (Platform/Jupiter/Vintage, AAA pattern, complete annotations)
+
+Module 12: Data Structures & Algorithms (10 Lessons)
+├── JAVA-061: Big-O Notation & Complexity Analysis (Time/space, asymptotic bounds, trade-offs)
+├── JAVA-062: Arrays: Memory Model & Operations (Contiguous allocation, Scanner, linear traversal)
+├── JAVA-063: Searching Algorithms: Linear vs Binary Search (O(log n), overflow avoidance)
+├── JAVA-064: Sorting Algorithms: Elementary to Advanced (Bubble, Selection, Insertion, QuickSort)
+├── JAVA-065: Linked Lists: Singly, Doubly & Circular (Node pointer mechanics, head/tail operations)
+├── JAVA-066: Stacks: LIFO Abstract Data Type & ArrayDeque (Call stack, parentheses matching)
+├── JAVA-067: Queues: FIFO Abstract Data Type & Circular Queues (Modulo wraparound, BFS, buffers)
+├── JAVA-068: Trees & Binary Search Trees (Traversals, BST properties, tree balancing)
+├── JAVA-069: Graphs: Adjacency List, Matrix, BFS & DFS (Cycle detection, visited sets)
+└── JAVA-070: Algorithmic Complexity Reference & Data Structures Matrix (Master cheat sheets)
+```
 ```
 
 ---
@@ -192,35 +215,36 @@ The Maven curriculum covers production build pipelines from first principles:
 10. **The Maven Wrapper (`mvnw`)**: Reproducible CI/CD execution without pre-installed host binaries.
 
 ### Interactive Visual Architectures
+- **Interactive Gradle Workflow & DAG Explorer**: 4 dynamic tabs with real-time lifecycle phase inspection, task DAG exploration, Gradle vs Maven comparison, and high-resolution infographic modal for `MIL_Gradle_Workflow_Diagram.png`.
+- **Interactive Spring Request-Response Lifecycle Explorer**: Step-through 13-step visualization tracing HTTP requests from browser DNS/TCP and Tomcat through DispatcherServlet, controllers, services, and Jackson serialization.
 - **Interactive Maven Lifecycle & Pipeline Explorer**: 4 dynamic tabs with real-time phase highlighting, artifact flow visualization, and interactive goal inspectability.
 - **High-Resolution Maven Build Lifecycle Diagram**: Embedded infographic modal exploring standard pipelines.
 - **Java Throwable Hierarchy & Java Thread State Machine**: Interactive visualizers for memory, exception handling, and concurrent states.
 
 ---
 
-## 💻 Hands-On Exercises (46 Labs)
+## 💻 Hands-On Exercises (54 Labs)
 
-46 interactive browser-based labs with real-time test verification:
+54 interactive browser-based labs with real-time test verification:
 - **`ex-001` - `ex-015`**: Fundamental syntax, type casting, conditions, loops, array allocation, OOP, enums, lambdas, and object serialization.
 - **`ex-016` - `ex-023`**: macOS setup verification, 3-category bug triage, `try-catch-finally`, custom checked exceptions, `Scanner` input, multithreading with lambdas, `synchronized` counter (`2250` increment demo), and thread state inspection (`Thread.State`).
 - **`ex-024` - `ex-036`**: Collections, Streams, Optional, Records, Sealed classes, and Virtual Threads.
-- **`ex-037` - `ex-046` (Maven Labs)**:
-  - `ex-037`: Create standard Maven project layout via CLI.
-  - `ex-038`: Author valid POM with GAV coordinates and Java 21 compilation properties.
-  - `ex-039`: Add JUnit 5 Jupiter dependency with `<scope>test</scope>`.
-  - `ex-040`: Run clean compilation and packaging (`mvn clean package`).
-  - `ex-041`: Skip test execution safely during emergency builds (`-DskipTests`).
-  - `ex-042`: Resolve dependency version conflicts using `mvn dependency:tree` and `<exclusions>`.
-  - `ex-043`: Author Multi-Module POM with `<modules>` and `<packaging>pom</packaging>`.
-  - `ex-044`: Centralize versions with `<dependencyManagement>`.
-  - `ex-045`: Configure Maven Shade Plugin to build executable fat Uber-JARs.
-  - `ex-046`: Bootstrap Maven Wrapper (`mvn wrapper:wrapper`) for portable CI/CD.
+- **`ex-037` - `ex-046` (Maven Labs)**: Layouts, POM authoring, dependencies, lifecycles, Surefire, multi-module POMs, and Shade Uber-JARs.
+- **`ex-047` - `ex-054` (Gradle, Spring Boot, JUnit 5, and DSA Labs)**:
+  - `ex-047`: Execute Gradle `bootRun` and verify UP-TO-DATE incremental task execution state.
+  - `ex-048`: Author Spring Boot `@RestController` and `@GetMapping` endpoint returning HTTP payload.
+  - `ex-049`: Implement JUnit 5 AAA test pattern with `assertEquals(expected, actual)`.
+  - `ex-050`: Implement Binary Search with overflow-safe midpoint calculation `low + (high - low) / 2`.
+  - `ex-051`: Array linear traversal and maximum element search with single-pass O(n) logic.
+  - `ex-052`: Singly Linked List prepend operation inserting at the head in O(1) time.
+  - `ex-053`: Parentheses balancing validator utilizing `ArrayDeque` as a LIFO stack.
+  - `ex-054`: Binary Search Tree (BST) recursive in-order traversal generating sorted sequences.
 
 ---
 
-## 🎯 Technical Interview Question Bank (117 Questions)
+## 🎯 Technical Interview Question Bank (127 Questions)
 
-117 high-frequency interview questions with:
+127 high-frequency interview questions with:
 - **30-Second Screening Summary**: Clear, concise elevator answers for recruiters and phone screens.
 - **Deep-Dive JVM Architecture**: Under-the-hood bytecode mechanics, memory layout, and runtime considerations.
 - **Follow-up Gotchas**: Common traps, edge cases, and architectural trade-offs.
@@ -232,19 +256,18 @@ Includes full coverage of:
 - **Concurrency**: Thread states, race conditions, atomic variables, monitor locks, `volatile`, deadlocks, and virtual threads.
 - **Collections**: `HashMap` treeification, `ConcurrentHashMap` segment locks, `ArrayList` geometric growth.
 - **Maven Architecture (`q-105` to `q-117`)**:
-  - `q-105`: Phase vs Goal difference in Maven.
-  - `q-106`: Three standard lifecycles and phase ordering.
-  - `q-107`: Maven repository resolution sequence (Local → Central → Remote Mirrors).
-  - `q-108`: Complete breakdown of all 6 dependency scopes.
-  - `q-109`: Transitive dependency mediation and the "nearest-definition" rule.
-  - `q-110`: Maven SNAPSHOT vs Release builds.
-  - `q-111`: Parent POM inheritance vs Multi-Module reactor builds.
-  - `q-112`: `<dependencyManagement>` vs direct `<dependencies>`.
-  - `q-113`: Maven Wrapper (`mvnw`) purpose in enterprise CI/CD.
-  - `q-114`: Difference between `mvn install` and `mvn deploy`.
-  - `q-115`: Packaging executable Uber-JARs (Shade vs Assembly vs Spring Boot plugins).
-  - `q-116`: Offline building (`mvn -o`) and dependency purge resolution.
-  - `q-117`: Comprehensive architectural comparison: Maven vs Gradle.
+  - `q-105` to `q-117`: Phase vs goal, lifecycles, scopes, dependency mediation, SNAPSHOTs, and multi-module builds.
+- **Spring Boot, Gradle, JUnit 5 & DSA (`q-118` to `q-127`)**:
+  - `q-118`: Spring Boot Auto-Configuration mechanics vs Spring XML/JavaConfig.
+  - `q-119`: Detailed 13-step HTTP request-to-response DispatcherServlet lifecycle.
+  - `q-120`: Gradle vs Maven architectural comparison and the Gradle Daemon.
+  - `q-121`: JUnit 5 three-tier architecture (Platform, Jupiter, Vintage) and PER_METHOD lifecycle.
+  - `q-122`: Time Complexity vs Auxiliary Space Complexity (Big-O analysis).
+  - `q-123`: Binary Search integer overflow trap and the `low + (high - low) / 2` mathematical fix.
+  - `q-124`: Algorithmic stability in sorting (stable vs unstable algorithms).
+  - `q-125`: Array vs Singly Linked List vs Doubly Linked List CPU cache locality.
+  - `q-126`: Why `ArrayDeque` is officially recommended over legacy `java.util.Stack`.
+  - `q-127`: BST height definition, skewed degradation, and self-balancing trees (AVL & Red-Black).
 
 ---
 
@@ -252,7 +275,7 @@ Includes full coverage of:
 
 The platform features an instant, client-side indexing engine:
 - Press `Cmd+K` (macOS), `Ctrl+K` (Windows/Linux), or `/` anywhere on the site.
-- Searches across all **48 topics**, **46 exercises**, and **117 interview questions**.
+- Searches across all **61 topics**, **54 exercises**, and **127 interview questions**.
 - Matches titles, summaries, keywords, explanation paragraphs, code blocks, bullet points, and key takeaways in real-time.
 
 ---

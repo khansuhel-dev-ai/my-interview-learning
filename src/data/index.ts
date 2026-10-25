@@ -87,10 +87,10 @@ export function searchAll(query: string): SearchResultItem[] {
   for (const topic of ALL_TOPICS) {
     const inTitle = topic.title.toLowerCase().includes(cleanQuery);
     const inSummary = topic.summary.toLowerCase().includes(cleanQuery);
-    const inKeywords = topic.keywords.some((k) => k.toLowerCase().includes(cleanQuery));
+    const inKeywords = (topic.keywords || []).some((k) => k.toLowerCase().includes(cleanQuery));
     const inCode = topic.codeNumber.toLowerCase().includes(cleanQuery);
     const inWhy = topic.whyItMatters.toLowerCase().includes(cleanQuery);
-    const inTakeaways = topic.keyTakeaways.some((k) => k.toLowerCase().includes(cleanQuery));
+    const inTakeaways = (topic.keyTakeaways || []).some((k) => k.toLowerCase().includes(cleanQuery));
     const inSections = topic.sections.some(
       (s) =>
         s.title.toLowerCase().includes(cleanQuery) ||

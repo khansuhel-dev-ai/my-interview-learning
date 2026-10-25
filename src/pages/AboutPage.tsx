@@ -146,7 +146,19 @@ export const AboutPage: React.FC = () => {
             </li>
             <li className="flex items-center gap-2">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-              <span>Build Automation: Apache Maven, pom.xml, Repositories & Lifecycles</span>
+              <span>Build Automation: Apache Maven & Gradle Groovy DSL with Wrapper Workflows</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+              <span>Spring Boot 3: Starters, Auto-Configuration & 13-Step Request Lifecycle</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+              <span>Unit Testing: JUnit 5 (Jupiter), AAA Pattern & Complete Annotations Matrix</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+              <span>Data Structures & Algorithms: Big-O, Arrays, Searching, Sorting, Stacks, Queues, Trees & Graphs</span>
             </li>
           </ul>
         </div>

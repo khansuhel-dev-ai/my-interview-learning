@@ -3,7 +3,7 @@ import { Check, Copy, Terminal, ChevronDown, ChevronUp, FileCode } from 'lucide-
 
 interface CodeBlockProps {
   code: string;
-  language?: 'java' | 'php' | 'bash' | 'sql' | 'text' | 'xml';
+  language?: 'java' | 'php' | 'bash' | 'sql' | 'text' | 'xml' | 'groovy';
   filename?: string;
   output?: string;
   explanation?: string;

@@ -13,6 +13,8 @@ import {
   FileCode2,
   BookMarked,
   Sparkles,
+  ExternalLink,
+  GitFork,
 } from 'lucide-react';
 import { Topic } from '../../types';
 import { CodeBlock } from './CodeBlock';
@@ -21,6 +23,8 @@ import { EXERCISES, INTERVIEW_QUESTIONS, getAdjacentTopics, getTopicById } from 
 import { ThrowableHierarchyDiagram } from './ThrowableHierarchyDiagram';
 import { ThreadLifecycleDiagram } from './ThreadLifecycleDiagram';
 import { MavenLifecycleDiagram } from './MavenLifecycleDiagram';
+import { GradleWorkflowDiagram } from './GradleWorkflowDiagram';
+import { SpringRequestLifecycleDiagram } from './SpringRequestLifecycleDiagram';
 
 interface TopicContentProps {
   topic: Topic;
@@ -223,6 +227,57 @@ export const TopicContent: React.FC<TopicContentProps> = ({ topic }) => {
             )}
             {section.customDiagram === 'maven-lifecycle' && (
               <MavenLifecycleDiagram />
+            )}
+            {section.customDiagram === 'gradle-workflow' && (
+              <GradleWorkflowDiagram />
+            )}
+            {section.customDiagram === 'spring-lifecycle' && (
+              <SpringRequestLifecycleDiagram />
+            )}
+
+            {/* Embedded Architecture Diagram / Image */}
+            {section.image && (
+              <div className="my-6 rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-[#12131d] p-3 shadow-xs">
+                <img
+                  src={section.image.src}
+                  alt={section.image.alt}
+                  className="w-full h-auto object-contain max-h-[520px] rounded-xl mx-auto"
+                  loading="lazy"
+                />
+                {section.image.caption && (
+                  <p className="mt-2.5 text-xs text-center text-zinc-500 dark:text-zinc-400 font-medium">
+                    {section.image.caption}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* GitHub Repository Reference Card */}
+            {section.githubLink && (
+              <div className="my-5 p-4 rounded-2xl bg-gradient-to-r from-zinc-50 via-indigo-50/30 to-purple-50/20 dark:from-[#13141f] dark:via-[#11121d] dark:to-[#17182b] border border-indigo-200/80 dark:border-indigo-900/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-zinc-900 dark:bg-zinc-800 text-white flex items-center justify-center shrink-0 shadow-xs">
+                    <GitFork className="w-4 h-4 text-emerald-400" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 block">
+                      Full Source Code Repository
+                    </span>
+                    <span className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white">
+                      {section.githubLink.title || 'Explore the full implementation in my GitHub repository'}
+                    </span>
+                  </div>
+                </div>
+                <a
+                  href={section.githubLink.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-white text-xs font-semibold shrink-0 transition-colors cursor-pointer"
+                >
+                  <span>View on GitHub</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-zinc-400" />
+                </a>
+              </div>
             )}
 
             {/* Code Snippet with Copy Button and Terminal Output */}

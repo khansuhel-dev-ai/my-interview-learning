@@ -16,7 +16,7 @@ export interface Language {
 }
 
 export interface CodeSnippet {
-  language: 'java' | 'php' | 'bash' | 'sql' | 'text' | 'xml';
+  language: 'java' | 'php' | 'bash' | 'sql' | 'text' | 'xml' | 'groovy';
   filename?: string;
   code: string;
   output?: string;
@@ -47,7 +47,16 @@ export interface TopicSection {
     title: string;
     text: string;
   };
-  customDiagram?: 'throwable-hierarchy' | 'thread-lifecycle' | 'maven-lifecycle';
+  customDiagram?: 'throwable-hierarchy' | 'thread-lifecycle' | 'maven-lifecycle' | 'gradle-workflow' | 'spring-lifecycle';
+  image?: {
+    src: string;
+    alt: string;
+    caption?: string;
+  };
+  githubLink?: {
+    url: string;
+    title?: string;
+  };
 }
 
 export interface Topic {
@@ -61,15 +70,15 @@ export interface Topic {
   summary: string;
   order: number;
   estimatedMinutes: number;
-  learningObjectives: string[];
+  learningObjectives?: string[];
   whyItMatters: string;
   sections: TopicSection[];
-  commonMistakes: { mistake: string; fix: string }[];
+  commonMistakes?: { mistake: string; fix: string }[];
   keyTakeaways: string[];
   relatedTopicIds: string[];
   exerciseIds: string[];
   interviewQuestionIds: string[];
-  keywords: string[];
+  keywords?: string[];
 }
 
 export interface TopicGroup {
